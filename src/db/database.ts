@@ -6,8 +6,9 @@ import postgres from "postgres";
 
 declare global {
   var database: PostgresJsDatabase<typeof schema> | undefined;
-} 
+}
 
+let database: PostgresJsDatabase<typeof schema>;
 let pg: ReturnType<typeof postgres>;
 
 if (env.NODE_ENV === "production") {
