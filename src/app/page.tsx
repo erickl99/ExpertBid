@@ -1,26 +1,18 @@
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import { ItemCard } from "@/app/item-card";
 import { database } from "@/db/database";
-import { bids } from "@/db/schema";
-import { revalidatePath } from "next/cache";
 
-export default async function Home() {
-  const currentBids = await database.query.bids.findMany();
+export default async function HomePage() {
+  const allItems = await database.query.items.findMany();
+
   return (
-    <main className="container mx-auto py-12">
-      <form
-        action={async (formData: FormData) => {
-          "use server";
-          await database.insert(bids).values({});
-          revalidatePath("/");
-        }}
-      >
-        <Input name="bid" type="text" placeholder="Bid" />
-        <Button type="submit">Place Bid</Button>
-      </form>
-      {currentBids.map((bid) => (
-        <div key={bid.id}>{bid.id}</div>
-      ))}
+    <main className="space-y-8">
+      <h1 className="text-4xl font-bold">Items For Sale</h1>
+
+      <div className="grid grid-cols-4 gap-8">
+        {allItems.map((item) => (
+          <ItemCard key={item.id} item={item} />
+        ))}
+      </div>
     </main>
   );
 }
