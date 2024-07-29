@@ -24,10 +24,10 @@ declare module "next-auth" {
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   adapter: DrizzleAdapter(database, {
-    usersTable: users,
+    usersTable: users as any,
     accountsTable: accounts as any,
-    sessionsTable: sessions,
-    verificationTokensTable: verificationTokens,
+    sessionsTable: sessions as any,
+    verificationTokensTable: verificationTokens as any,
   }),
   callbacks: {
     session({ session, user }) {
